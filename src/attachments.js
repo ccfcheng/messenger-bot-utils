@@ -1,10 +1,8 @@
-const makeText = (text) => {
-  if (text.length > 640) {
-    const truncated = `${text.slice(0, 637)}...`;
-    return { text: truncated };
-  }
-  return { text };
-};
+import { truncate } from './utils';
+
+const makeText = (text) => ({
+  text: truncate(text, 640),
+});
 
 const makePayload = (type, url) => ({
   attachment: {
