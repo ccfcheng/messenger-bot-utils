@@ -1,6 +1,6 @@
 {
   "name": "messenger-bot-utils",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Utilities to generate Facebook Messenger messages",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,9 @@
     "url": "https://github.com/ccfcheng/fb-messenger-utils/issues"
   },
   "homepage": "https://github.com/ccfcheng/fb-messenger-utils#readme",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "babel": {
     "presets": [
       "es2015"
