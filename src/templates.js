@@ -45,6 +45,7 @@ const list = (elements, buttons, style) => {
 // takes an array of elements and an array of a single button
 const compactList = (els, btns) => list(els, btns, 'compact');
 // makeElement generates an element for generic templates or list Templates
+// TODO: Check for unnecessary keys in config object
 const makeElement = (config, type) => {
   const {
     title,
@@ -54,9 +55,21 @@ const makeElement = (config, type) => {
     buttons,
   } = config;
   if (type === 'generic') {
-
+    return {
+      title: truncate(title, 80),
+      subtitle: truncate(subtitle, 80),
+      image_url,
+      default_action,
+      buttons: buttons.slice(0, 3),
+    };
   } else if (type === 'list') {
-
+    return {
+      title: truncate(title, 80),
+      subtitle: truncate(subtitle, 80),
+      image_url,
+      default_action,
+      buttons: buttons.slice(0, 1),
+    };
   }
 };
 // makeGenericElement generates an element for a generic template

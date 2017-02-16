@@ -25,8 +25,26 @@ describe('Templates Generators:', () => {
   });
 
   describe('generic():', () => {
-    it('SHould generate a valid JSON object for a generic template', () => {
-      const elements = [];
+    it('Should generate a valid JSON object for a generic template', () => {
+      const btn1 = Buttons.share();
+      const btn2 = Buttons.login('http://www.test.com');
+      const btn3 = Buttons.logout();
+      const buttons = [btn1, btn2, btn3];
+      const action = Buttons.webURL('', 'http://www.test.com');
+      const config = {
+        title: 'TITLE',
+        subtitle: 'SUBTITLE',
+        image_url: 'http://www.example.com/image.png',
+        default_action: action,
+        buttons,
+      };
+      const elements = [
+        Templates.makeGenericElement(config),
+        Templates.makeGenericElement(config),
+        Templates.makeGenericElement(config),
+        Templates.makeGenericElement(config),
+        Templates.makeGenericElement(config),
+      ];
       const expected = {
         attachment: {
           type: 'template',
@@ -41,9 +59,22 @@ describe('Templates Generators:', () => {
   });
 
   describe('list():', () => {
-    it('SHould generate a valid JSON object for a list template', () => {
-      const elements = [];
-      const buttons = [];
+    it('Should generate a valid JSON object for a list template', () => {
+      const btn1 = Buttons.share();
+      const buttons = [btn1];
+      const action = Buttons.webURL('', 'http://www.test.com');
+      const config = {
+        title: 'TITLE',
+        subtitle: 'SUBTITLE',
+        image_url: 'http://www.example.com/image.png',
+        default_action: action,
+        buttons,
+      };
+      const elements = [
+        Templates.makeListElement(config),
+        Templates.makeListElement(config),
+        Templates.makeListElement(config),
+      ];
       const expected = {
         attachment: {
           type: 'template',
@@ -59,9 +90,22 @@ describe('Templates Generators:', () => {
   });
 
   describe('compactList():', () => {
-    it('SHould generate a valid JSON object for a compact list template', () => {
-      const elements = [];
-      const buttons = [];
+    it('Should generate a valid JSON object for a compact list template', () => {
+      const btn1 = Buttons.share();
+      const buttons = [btn1];
+      const action = Buttons.webURL('', 'http://www.test.com');
+      const config = {
+        title: 'TITLE',
+        subtitle: 'SUBTITLE',
+        image_url: 'http://www.example.com/image.png',
+        default_action: action,
+        buttons,
+      };
+      const elements = [
+        Templates.makeListElement(config),
+        Templates.makeListElement(config),
+        Templates.makeListElement(config),
+      ];
       const expected = {
         attachment: {
           type: 'template',
@@ -78,17 +122,51 @@ describe('Templates Generators:', () => {
   });
 
   describe('makeGenericElement():', () => {
-    it('SHould generate a valid JSON object for an element in a generic template', () => {
-      const config = {};
-      const expected = {};
+    it('Should generate a valid JSON object for an element in a generic template', () => {
+      const btn1 = Buttons.share();
+      const btn2 = Buttons.login('http://www.test.com');
+      const btn3 = Buttons.logout();
+      const buttons = [btn1, btn2, btn3, btn1, btn2, btn3];
+      const action = Buttons.webURL('', 'http://www.test.com');
+      const config = {
+        title: 'TITLE',
+        subtitle: 'SUBTITLE',
+        image_url: 'http://www.example.com/image.png',
+        default_action: action,
+        buttons,
+      };
+      const expected = {
+        title: 'TITLE',
+        subtitle: 'SUBTITLE',
+        image_url: 'http://www.example.com/image.png',
+        default_action: action,
+        buttons: [btn1, btn2, btn3],
+      };
       expect(Templates.makeGenericElement(config)).to.deep.equal(expected);
     });
   });
 
   describe('makeListElement():', () => {
-    it('SHould generate a valid JSON object for an element in a generic template', () => {
-      const config = {};
-      const expected = {};
+    it('Should generate a valid JSON object for an element in a generic template', () => {
+      const btn1 = Buttons.share();
+      const btn2 = Buttons.login('http://www.test.com');
+      const btn3 = Buttons.logout();
+      const buttons = [btn1, btn2, btn3];
+      const action = Buttons.webURL('', 'http://www.test.com');
+      const config = {
+        title: 'TITLE',
+        subtitle: 'SUBTITLE',
+        image_url: 'http://www.example.com/image.png',
+        default_action: action,
+        buttons,
+      };
+      const expected = {
+        title: 'TITLE',
+        subtitle: 'SUBTITLE',
+        image_url: 'http://www.example.com/image.png',
+        default_action: action,
+        buttons: [btn1],
+      };
       expect(Templates.makeListElement(config)).to.deep.equal(expected);
     });
   });
