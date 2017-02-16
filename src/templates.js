@@ -28,7 +28,7 @@ const generic = (elements) => {
 // list generates an object for a list template with large header
 // takes an array of elements and an array of a single button
 // 3rd param to configure between large and compact list style
-const list = (elements, buttons, style) => {
+const list = (elements, buttons, style = 'large') => {
   const message = makeTemplate('list');
   if (style === 'compact') {
     message.attachment.payload.top_element_style = 'compact';
@@ -45,7 +45,6 @@ const list = (elements, buttons, style) => {
 // takes an array of elements and an array of a single button
 const compactList = (els, btns) => list(els, btns, 'compact');
 // makeElement generates an element for generic templates or list Templates
-// TODO: Check for unnecessary keys in config object
 const makeElement = (config, type) => {
   const {
     title,
@@ -54,23 +53,21 @@ const makeElement = (config, type) => {
     default_action,
     buttons,
   } = config;
-  if (type === 'generic') {
-    return {
-      title: truncate(title, 80),
-      subtitle: truncate(subtitle, 80),
-      image_url,
-      default_action,
-      buttons: buttons.slice(0, 3),
-    };
-  } else if (type === 'list') {
-    return {
-      title: truncate(title, 80),
-      subtitle: truncate(subtitle, 80),
-      image_url,
-      default_action,
-      buttons: buttons.slice(0, 1),
-    };
+  const element = {};
+  if (title) {
+    element.title = truncate(title, 80);
+  } else {
+    throw('Config object must contain a title');
   }
+  if (subtitle) element.subtitle = truncate(subtitle, 80);
+  if (image_url) element.image_url = image_url;
+  if (default_action) element.default_action = default_action;
+  if (type === 'generic') {
+    if (buttons) element.buttons = buttons.slice(0, 3);
+  } else if (type === 'list') {
+    if (buttons) element.buttons = buttons.slice(0, 1);
+  }
+  return element;
 };
 // makeGenericElement generates an element for a generic template
 const makeGenericElement = (config) => makeElement(config, 'generic');
